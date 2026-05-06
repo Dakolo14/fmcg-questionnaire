@@ -1,0 +1,1054 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FMCG Distributor Research Questionnaire</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #2563eb;
+            --secondary: #1e40af;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+            --light: #f3f4f6;
+            --dark: #1f2937;
+            --border: #e5e7eb;
+            --blue: #3b82f6;
+            --red: #ef4444;
+            --yellow: #fbbf24;
+            --green: #10b981;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #e8ecf1 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            color: var(--dark);
+        }
+
+        .container {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.12);
+            max-width: 700px;
+            width: 100%;
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #1e3a8a 0%, #1e40af 100%);
+            color: white;
+            padding: 30px 20px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 24px;
+            margin-bottom: 8px;
+            font-weight: 700;
+        }
+
+        .header p {
+            font-size: 14px;
+            opacity: 0.9;
+        }
+
+        .progress-section {
+            padding: 20px;
+            background: white;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .progress-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        .phase-badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .phase-badge.phase-1 {
+            background: #dbeafe;
+            color: #0c4a6e;
+        }
+
+        .phase-badge.phase-2 {
+            background: #fee2e2;
+            color: #7f1d1d;
+        }
+
+        .phase-badge.phase-3 {
+            background: #fef3c7;
+            color: #78350f;
+        }
+
+        .phase-badge.phase-4 {
+            background: #dcfce7;
+            color: #15803d;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 6px;
+            background: var(--border);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            border-radius: 10px;
+            transition: width 0.3s ease;
+        }
+
+        .content {
+            padding: 30px 20px;
+            min-height: 400px;
+            background: white;
+        }
+
+        .question-group {
+            display: none;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .question-group.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .question-item {
+            margin-bottom: 25px;
+            padding-bottom: 25px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .question-item:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+
+        .question-number {
+            display: inline-block;
+            background: var(--primary);
+            color: white;
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .question-text {
+            font-size: 15px;
+            font-weight: 600;
+            color: var(--dark);
+            margin-bottom: 12px;
+            line-height: 1.5;
+        }
+
+        .question-hint {
+            font-size: 13px;
+            color: #0c4a6e;
+            background: #dbeafe;
+            padding: 10px 12px;
+            border-left: 3px solid var(--primary);
+            border-radius: 4px;
+            margin-bottom: 12px;
+            font-style: italic;
+        }
+
+        .answer-input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            font-size: 14px;
+            font-family: inherit;
+            resize: vertical;
+            min-height: 80px;
+            transition: all 0.2s;
+        }
+
+        .answer-input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+        }
+
+        .answer-input.filled {
+            border-color: var(--success);
+            background: rgba(16, 185, 129, 0.02);
+        }
+
+        .phase-title {
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 20px;
+            padding-bottom: 12px;
+            border-bottom: 2px solid var(--primary);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .phase-emoji {
+            font-size: 24px;
+        }
+
+        .buttons {
+            display: flex;
+            gap: 10px;
+            padding: 20px;
+            background: white;
+            border-top: 1px solid var(--border);
+            justify-content: space-between;
+        }
+
+        button {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 50px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            flex-grow: 1;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(37, 99, 235, 0.25);
+        }
+
+        .btn-primary:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .btn-secondary {
+            background: white;
+            color: var(--primary);
+            border: 2px solid var(--border);
+            padding: 10px 24px;
+        }
+
+        .btn-secondary:hover {
+            background: var(--light);
+            border-color: var(--primary);
+        }
+
+        .completion-screen {
+            display: none;
+            text-align: center;
+            padding: 40px 20px;
+        }
+
+        .completion-screen.active {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .completion-icon {
+            font-size: 60px;
+            margin-bottom: 20px;
+            animation: bounce 0.6s ease;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+
+        .completion-title {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 15px;
+            color: var(--success);
+        }
+
+        .completion-text {
+            font-size: 15px;
+            color: #6b7280;
+            line-height: 1.6;
+            margin-bottom: 30px;
+        }
+
+        .action-items {
+            background: var(--light);
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+            text-align: left;
+        }
+
+        .action-items h3 {
+            font-size: 14px;
+            font-weight: 700;
+            margin-bottom: 12px;
+            color: var(--dark);
+        }
+
+        .action-items ol {
+            margin-left: 20px;
+            font-size: 13px;
+            color: #6b7280;
+            line-height: 1.8;
+        }
+
+        .action-items li {
+            margin-bottom: 12px;
+        }
+
+        .action-items strong {
+            color: var(--dark);
+        }
+
+        .download-btn {
+            background: var(--success);
+            color: white;
+            margin-top: 15px;
+        }
+
+        .download-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(16, 185, 129, 0.25);
+        }
+
+        .question-counter {
+            color: #6b7280;
+            font-weight: 600;
+            font-size: 12px;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 640px) {
+            .header {
+                padding: 20px 15px;
+            }
+
+            .header h1 {
+                font-size: 20px;
+            }
+
+            .content {
+                padding: 20px 15px;
+                min-height: 300px;
+            }
+
+            .buttons {
+                padding: 15px;
+                gap: 8px;
+            }
+
+            button {
+                padding: 10px 16px;
+                font-size: 12px;
+            }
+
+            .btn-secondary {
+                padding: 8px 14px;
+            }
+
+            .question-text {
+                font-size: 14px;
+            }
+
+            .phase-title {
+                font-size: 16px;
+            }
+
+            .completion-icon {
+                font-size: 48px;
+            }
+
+            .completion-title {
+                font-size: 20px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                border-radius: 0;
+                min-height: 100vh;
+            }
+
+            body {
+                padding: 0;
+                align-items: flex-start;
+            }
+
+            .header {
+                padding: 15px;
+            }
+
+            .header h1 {
+                font-size: 18px;
+            }
+
+            .header p {
+                font-size: 12px;
+            }
+
+            .progress-info {
+                font-size: 11px;
+            }
+
+            .content {
+                padding: 15px;
+            }
+
+            .question-item {
+                margin-bottom: 20px;
+                padding-bottom: 20px;
+            }
+
+            .buttons {
+                position: sticky;
+                bottom: 0;
+                flex-direction: column;
+            }
+
+            .btn-secondary {
+                width: 100%;
+            }
+
+            .btn-primary {
+                width: 100%;
+            }
+        }
+
+        .survey-description {
+            background: #f0f4ff;
+            padding: 14px;
+            border-radius: 8px;
+            margin-bottom: 25px;
+            font-size: 13px;
+            color: #334155;
+            line-height: 1.6;
+            border-left: 3px solid var(--primary);
+        }
+
+        .survey-description strong {
+            color: var(--dark);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🎯 Research Questionnaire</h1>
+            <p>FMCG Distributor Operations Deep Dive</p>
+        </div>
+
+        <div class="progress-section">
+            <div class="progress-info">
+                <span id="phaseLabel" class="phase-badge phase-1">Phase 1</span>
+                <span class="question-counter"><span id="currentPhase">1</span> / <span id="totalPhases">4</span></span>
+            </div>
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressFill" style="width: 0%"></div>
+            </div>
+        </div>
+
+        <div class="content">
+            <!-- EMAIL ENTRY SCREEN -->
+            <div class="question-group active" id="emailScreen" data-phase="0">
+                <div class="survey-description">
+                    <strong>📧 Before We Start</strong><br>
+                    We'd like to keep your insights organized. What's your email?
+                </div>
+
+                <div class="question-item" style="margin-top: 30px;">
+                    <div class="question-text" style="margin-bottom: 15px;">Your Email Address</div>
+                    <input type="email" id="userEmail" class="answer-input" placeholder="your.email@company.com" style="min-height: auto; padding: 12px; border-radius: 8px; font-size: 15px;" required>
+                    <div id="emailError" style="color: #ef4444; font-size: 13px; margin-top: 8px; display: none;"></div>
+                </div>
+            </div>
+
+            <!-- PHASE 1: WARM UP -->
+            <div class="question-group" data-phase="1">
+                <div class="survey-description">
+                    <strong>🔵 Phase 1 — Warm Up</strong>
+                </div>
+
+                <div class="question-item">
+                    <div class="question-number">1</div>
+                    <div class="question-text">How long have you been managing the distributor network?</div>
+                    <textarea class="answer-input" placeholder="Describe your experience and background in this role..." data-question="1" required></textarea>
+                </div>
+
+                <div class="question-item">
+                    <div class="question-number">2</div>
+                    <div class="question-text">Roughly how many active distributors and retailers are you working with across Nigeria?</div>
+                    <textarea class="answer-input" placeholder="Enter total number and geographic distribution..." data-question="2" required></textarea>
+                </div>
+
+                <div class="question-item">
+                    <div class="question-number">3</div>
+                    <div class="question-text">Which regions are your strongest? Which ones give you the most headache?</div>
+                    <textarea class="answer-input" placeholder="List your strongest regions and the ones with challenges..." data-question="3" required></textarea>
+                </div>
+            </div>
+
+            <!-- PHASE 2: PAIN POINTS -->
+            <div class="question-group" data-phase="2">
+                <div class="survey-description">
+                    <strong>🔴 Phase 2 — Pain Points</strong><br>
+                </div>
+
+                <h3 class="phase-title"><span class="phase-emoji">📦</span> On Orders</h3>
+
+                <div class="question-item">
+                    <div class="question-number">4</div>
+                    <div class="question-text">Walk me through exactly what happens from order placement to delivery. Step by step.</div>
+                    <textarea class="answer-input" placeholder="Describe the complete order process from placement to delivery..." data-question="4" required></textarea>
+                </div>
+
+                <div class="question-item">
+                    <div class="question-number">5</div>
+                    <div class="question-text">How many orders are coming in daily and who's responsible for collecting them?</div>
+                    <textarea class="answer-input" placeholder="Enter daily order volume and the person(s) responsible..." data-question="5" required></textarea>
+                </div>
+
+                <div class="question-item">
+                    <div class="question-number">6</div>
+                    <div class="question-text">What happens when a sales rep is unavailable? How does that order get processed?</div>
+                    <textarea class="answer-input" placeholder="Describe the backup process when a rep is unavailable..." data-question="6" required></textarea>
+                </div>
+
+                <h3 class="phase-title"><span class="phase-emoji">💰</span> On Payments & Credit</h3>
+
+                <div class="question-item">
+                    <div class="question-number">7</div>
+                    <div class="question-text">How do you currently track whether a distributor paid before giving them a new order?</div>
+                    <textarea class="answer-input" placeholder="Describe your current payment tracking method..." data-question="7" required></textarea>
+                </div>
+
+                <div class="question-item">
+                    <div class="question-number">8</div>
+                    <div class="question-text">How big of a problem is overdue debt? Does it come up in management meetings?</div>
+                    <textarea class="answer-input" placeholder="Describe the extent of overdue debt and its impact on business..." data-question="8" required></textarea>
+                </div>
+
+                <div class="question-item">
+                    <div class="question-number">9</div>
+                    <div class="question-text">Who chases distributors for payments — sales rep, finance, or both?</div>
+                    <textarea class="answer-input" placeholder="Describe who handles payment follow-up and how it works..." data-question="9" required></textarea>
+                </div>
+
+                <h3 class="phase-title"><span class="phase-emoji">👥</span> On Field Sales Reps</h3>
+
+                <div class="question-item">
+                    <div class="question-number">10</div>
+                    <div class="question-text">How do you know your reps are actually visiting customers they say they're visiting?</div>
+                    <textarea class="answer-input" placeholder="Describe your rep verification and monitoring methods..." data-question="10" required></textarea>
+                </div>
+
+                <div class="question-item">
+                    <div class="question-number">11</div>
+                    <div class="question-text">How do reps report at end of day? WhatsApp, phone call, Excel?</div>
+                    <textarea class="answer-input" placeholder="Describe how reps report their daily activities and results..." data-question="11" required></textarea>
+                </div>
+
+                <div class="question-item">
+                    <div class="question-number">12</div>
+                    <div class="question-text">How many reps do you have and how do managers track them in real time?</div>
+                    <textarea class="answer-input" placeholder="Enter number of reps and describe real-time tracking methods..." data-question="12" required></textarea>
+                </div>
+
+                <h3 class="phase-title"><span class="phase-emoji">📊</span> On Visibility & Reporting</h3>
+
+                <div class="question-item">
+                    <div class="question-number">13</div>
+                    <div class="question-text">If the MD asked right now "how much did we sell yesterday?" how long to get that number?</div>
+                    <textarea class="answer-input" placeholder="How long would it take to provide yesterday's sales figures?" data-question="13" required></textarea>
+                </div>
+
+                <div class="question-item">
+                    <div class="question-number">14</div>
+                    <div class="question-text">When management wants a sales report, how is it prepared and how long does it take?</div>
+                    <textarea class="answer-input" placeholder="Describe the process for preparing sales reports and timeline..." data-question="14" required></textarea>
+                </div>
+
+                <div class="question-item">
+                    <div class="question-number">15</div>
+                    <div class="question-text">Can you tell in real time which distributors haven't ordered in 2 weeks or are falling behind?</div>
+                    <textarea class="answer-input" placeholder="Describe your visibility into inactive or underperforming distributors..." data-question="15" required></textarea>
+                </div>
+
+                <h3 class="phase-title"><span class="phase-emoji">🎁</span> On Promotions</h3>
+
+                <div class="question-item">
+                    <div class="question-number">16</div>
+                    <div class="question-text">When you run a trade promo like "buy X get Y free" how do you make sure it's applied correctly?</div>
+                    <textarea class="answer-input" placeholder="Describe how you verify and track promotional compliance..." data-question="16" required></textarea>
+                </div>
+
+                <div class="question-item">
+                    <div class="question-number">17</div>
+                    <div class="question-text">Has anyone ever claimed promo discounts they weren't supposed to get?</div>
+                    <textarea class="answer-input" placeholder="Describe any instances of improper promotional claims..." data-question="17" required></textarea>
+                </div>
+            </div>
+
+            <!-- PHASE 3: CURRENT TOOLS -->
+            <div class="question-group" data-phase="3">
+                <div class="survey-description">
+                    <strong>🟡 Phase 3 — Understand Their Tools Today</strong>
+                </div>
+
+                <div class="question-item">
+                    <div class="question-number">18</div>
+                    <div class="question-text">What tools or software is the sales/distribution team currently using?</div>
+                    <textarea class="answer-input" placeholder="List all tools and software currently in use..." data-question="18" required></textarea>
+                </div>
+
+                <div class="question-item">
+                    <div class="question-number">19</div>
+                    <div class="question-text">Has the company tried any software before? What happened?</div>
+                    <textarea class="answer-input" placeholder="Describe any past software implementations and what happened..." data-question="19" required></textarea>
+                </div>
+
+                <div class="question-item">
+                    <div class="question-number">20</div>
+                    <div class="question-text">Does international use software the Nigerian team doesn't have?</div>
+                    <textarea class="answer-input" placeholder="Describe any technology differences with international operations..." data-question="20" required></textarea>
+                </div>
+            </div>
+
+            <!-- PHASE 4: DECISION MAKING -->
+            <div class="question-group" data-phase="4">
+                <div class="survey-description">
+                    <strong>🟢 Phase 4 — Decision Making</strong>
+                </div>
+
+                <div class="question-item">
+                    <div class="question-number">21</div>
+                    <div class="question-text">If a solution fixed everything you described — who would need to approve it?</div>
+                    <textarea class="answer-input" placeholder="Describe the decision-making and approval process..." data-question="21" required></textarea>
+                </div>
+
+                <div class="question-item">
+                    <div class="question-number">22</div>
+                    <div class="question-text">Does budget for a tool like this live in Sales, IT, or Finance?</div>
+                    <textarea class="answer-input" placeholder="Indicate where software budget authority and approval live..." data-question="22" required></textarea>
+                </div>
+
+                <div class="question-item">
+                    <div class="question-number">23</div>
+                    <div class="question-text">⭐ If you could fix just ONE thing about distributor management tomorrow — what would it be?</div>
+                    <textarea class="answer-input" placeholder="What is the ONE most important thing you'd fix?" data-question="23" required></textarea>
+                </div>
+            </div>
+
+            </div>
+            <div class="completion-screen" id="completionScreen">
+                <div class="completion-icon">✅</div>
+                <h2 class="completion-title">Thank You</h2>
+                <p class="completion-text">
+                    Thank you so much for your time. This was incredibly insightful.
+                </p>
+            </div>
+
+            <div class="buttons" id="buttons">
+                <button class="btn-secondary" id="prevBtn" onclick="previousQuestion()" style="display: none;">← Previous</button>
+                <button class="btn-primary" id="nextBtn" onclick="nextQuestion()">Next →</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const TOTAL_QUESTIONS = 23;
+        const PHASES = {
+            1: { start: 1, end: 3, label: "Phase 1: Warm Up", color: "phase-1" },
+            2: { start: 4, end: 17, label: "Phase 2: Pain Points", color: "phase-2" },
+            3: { start: 18, end: 20, label: "Phase 3: Current Tools", color: "phase-3" },
+            4: { start: 21, end: 23, label: "Phase 4: Decision Making", color: "phase-4" }
+        };
+
+        let currentQuestion = 1;
+        let responses = {};
+        let userEmail = '';
+        let isEmailValidated = false;
+
+        // Check for previously submitted emails
+        function getSubmittedEmails() {
+            const submitted = localStorage.getItem('submittedEmails');
+            return submitted ? JSON.parse(submitted) : [];
+        }
+
+        function addSubmittedEmail(email) {
+            const submitted = getSubmittedEmails();
+            submitted.push(email);
+            localStorage.setItem('submittedEmails', JSON.stringify(submitted));
+        }
+
+        function isEmailAlreadySubmitted(email) {
+            const submitted = getSubmittedEmails();
+            return submitted.includes(email);
+        }
+
+        function validateAndSetEmail() {
+            const emailInput = document.getElementById('userEmail');
+            const errorDiv = document.getElementById('emailError');
+            const email = emailInput.value.trim();
+
+            // Validate email format
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!email || !emailRegex.test(email)) {
+                errorDiv.textContent = 'Please enter a valid email address';
+                errorDiv.style.display = 'block';
+                return false;
+            }
+
+            // Check if email already submitted
+            if (isEmailAlreadySubmitted(email)) {
+                errorDiv.textContent = 'This email has already completed the interview. Thank you!';
+                errorDiv.style.display = 'block';
+                return false;
+            }
+
+            errorDiv.style.display = 'none';
+            userEmail = email;
+            isEmailValidated = true;
+            return true;
+        }
+
+        function getCurrentPhase() {
+            // Email screen
+            if (currentQuestion === 0) {
+                return 0;
+            }
+            for (let [phaseNum, phaseData] of Object.entries(PHASES)) {
+                if (currentQuestion >= phaseData.start && currentQuestion <= phaseData.end) {
+                    return parseInt(phaseNum);
+                }
+            }
+            return 1;
+        }
+
+        function updateProgress() {
+            const phase = getCurrentPhase();
+            
+            // Hide progress section during email screen
+            if (phase === 0) {
+                document.getElementById('currentPhase').textContent = '';
+                document.getElementById('totalPhases').textContent = '';
+                document.getElementById('phaseLabel').textContent = '';
+                document.getElementById('progressFill').style.width = '0%';
+                document.getElementById('prevBtn').style.display = 'none';
+                document.getElementById('nextBtn').textContent = 'Continue →';
+                return;
+            }
+
+            const phaseProgress = (phase / 4) * 100;
+            document.getElementById('progressFill').style.width = phaseProgress + '%';
+            
+            document.getElementById('currentPhase').textContent = phase;
+            document.getElementById('totalPhases').textContent = 4;
+
+            const phaseClass = PHASES[phase].color;
+            const phaseLabel = document.getElementById('phaseLabel');
+            phaseLabel.textContent = PHASES[phase].label;
+            phaseLabel.className = 'phase-badge ' + phaseClass;
+
+            // Show/hide buttons based on phase
+            document.getElementById('prevBtn').style.display = phase === 1 ? 'none' : 'block';
+            document.getElementById('nextBtn').textContent = phase === 4 ? '✓ Complete' : 'Next →';
+        }
+
+        function showQuestion(questionNum) {
+            // Hide all question groups
+            document.querySelectorAll('.question-group').forEach(group => {
+                group.classList.remove('active');
+            });
+
+            // Hide completion screen
+            document.getElementById('completionScreen').classList.remove('active');
+
+            // Show appropriate question group
+            if (questionNum < 1) {
+                // Show email screen
+                const emailScreen = document.getElementById('emailScreen');
+                if (emailScreen) {
+                    emailScreen.classList.add('active');
+                }
+            } else {
+                const phase = getCurrentPhase();
+                document.querySelectorAll('.question-group').forEach(group => {
+                    if (parseInt(group.dataset.phase) === parseInt(phase)) {
+                        group.classList.add('active');
+                    }
+                });
+
+                // Restore response if exists
+                const textarea = document.querySelector(`textarea[data-question="${questionNum}"]`);
+                if (textarea && responses[questionNum]) {
+                    textarea.value = responses[questionNum];
+                    textarea.classList.add('filled');
+                }
+            }
+
+            // Show buttons
+            document.getElementById('buttons').style.display = 'flex';
+
+            updateProgress();
+        }
+
+        function saveCurrentResponse() {
+            const textarea = document.querySelector(`textarea[data-question="${currentQuestion}"]`);
+            if (textarea && textarea.value.trim()) {
+                responses[currentQuestion] = textarea.value;
+                textarea.classList.add('filled');
+            }
+        }
+
+        function nextQuestion() {
+            // Check if on email screen
+            const emailScreen = document.getElementById('emailScreen');
+            if (emailScreen && emailScreen.classList.contains('active')) {
+                // Validate and set email
+                if (!validateAndSetEmail()) {
+                    return;
+                }
+                // Move to Phase 1
+                currentQuestion = 1;
+                showQuestion(currentQuestion);
+                window.scrollTo(0, 0);
+                return;
+            }
+
+            // Save all responses in current phase
+            document.querySelectorAll('.question-group.active textarea').forEach(textarea => {
+                const q = textarea.dataset.question;
+                if (textarea.value.trim()) {
+                    responses[q] = textarea.value;
+                    textarea.classList.add('filled');
+                }
+            });
+
+            const currentPhase = getCurrentPhase();
+            if (currentPhase < 4) {
+                // Move to next phase's first question
+                currentQuestion = PHASES[parseInt(currentPhase) + 1].start;
+                showQuestion(currentQuestion);
+                window.scrollTo(0, 0);
+            } else {
+                showCompletion();
+            }
+        }
+
+        function previousQuestion() {
+            const currentPhase = getCurrentPhase();
+            
+            // Don't allow going back from Phase 1
+            if (currentPhase <= 1) {
+                return;
+            }
+
+            // Save all responses in current phase
+            document.querySelectorAll('.question-group.active textarea').forEach(textarea => {
+                const q = textarea.dataset.question;
+                if (textarea.value.trim()) {
+                    responses[q] = textarea.value;
+                    textarea.classList.add('filled');
+                }
+            });
+
+            if (currentPhase > 1) {
+                // Move to previous phase's first question
+                currentQuestion = PHASES[parseInt(currentPhase) - 1].start;
+                showQuestion(currentQuestion);
+                window.scrollTo(0, 0);
+            }
+        }
+
+        function showCompletion() {
+            // Send email with responses
+            sendEmailWithResponses();
+            
+            document.querySelectorAll('.question-group').forEach(group => {
+                group.classList.remove('active');
+            });
+            document.getElementById('completionScreen').classList.add('active');
+            document.getElementById('buttons').style.display = 'none';
+            window.scrollTo(0, 0);
+        }
+
+        function sendEmailWithResponses() {
+            // Prepare email content
+            let emailContent = "FMCG DISTRIBUTOR RESEARCH INTERVIEW - RESPONSES\n";
+            emailContent += "=".repeat(50) + "\n\n";
+            emailContent += `Respondent Email: ${userEmail}\n`;
+            emailContent += `Date: ${new Date().toLocaleDateString()}\n`;
+            emailContent += `Time: ${new Date().toLocaleTimeString()}\n\n`;
+
+            for (let phase = 1; phase <= 4; phase++) {
+                const phaseData = PHASES[phase];
+                emailContent += `\n${phaseData.label.toUpperCase()}\n`;
+                emailContent += "-".repeat(40) + "\n\n";
+
+                for (let q = phaseData.start; q <= phaseData.end; q++) {
+                    const questionText = document.querySelector(`textarea[data-question="${q}"]`);
+                    if (questionText) {
+                        emailContent += `Q${q}: ${questionText.previousElementSibling.textContent}\n`;
+                        emailContent += `A: ${responses[q] || "[Not answered]"}\n\n`;
+                    }
+                }
+            }
+
+            // Send via FormSubmit
+            const formData = new FormData();
+            formData.append('email', 'ajosedare4u@gmail.com');
+            formData.append('subject', `FMCG Distributor Research - Interview Responses from ${userEmail}`);
+            formData.append('message', emailContent);
+
+            fetch('https://formsubmit.co/ajax/ajosedare4u@gmail.com', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => {
+                if (response.ok) {
+                    // Email sent successfully - now mark as submitted
+                    addSubmittedEmail(userEmail);
+                    console.log('Email sent successfully');
+                } else {
+                    throw new Error('Email delivery failed');
+                }
+            })
+            .catch(error => {
+                console.error('Email sending error:', error);
+                // Still mark as submitted to prevent duplicate submissions
+                addSubmittedEmail(userEmail);
+            });
+        }
+
+        function downloadResponses() {
+            let content = "FMCG DISTRIBUTOR RESEARCH INTERVIEW - RESPONSES\n";
+            content += "=" .repeat(50) + "\n\n";
+            content += `Date: ${new Date().toLocaleDateString()}\n`;
+            content += `Time: ${new Date().toLocaleTimeString()}\n\n`;
+
+            for (let phase = 1; phase <= 4; phase++) {
+                const phaseData = PHASES[phase];
+                content += `\n${phaseData.label.toUpperCase()}\n`;
+                content += "-".repeat(40) + "\n\n";
+
+                for (let q = phaseData.start; q <= phaseData.end; q++) {
+                    content += `Q${q}: ${getQuestionText(q)}\n`;
+                    content += `A: ${responses[q] || "[Not answered]"}\n`;
+                    content += "\n";
+                }
+            }
+
+            content += "\n\nPOST-MEETING ACTION ITEMS\n";
+            content += "=" .repeat(50) + "\n";
+            content += "1. Write down every pain point in their exact words\n";
+            content += "2. Note every manual/WhatsApp/Excel process\n";
+            content += "3. Send thank you message within 2 hours\n";
+
+            const element = document.createElement('a');
+            element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(content));
+            element.setAttribute('download', `FMCG_Interview_${new Date().toISOString().split('T')[0]}.txt`);
+            element.style.display = 'none';
+            document.body.appendChild(element);
+            element.click();
+            document.body.removeChild(element);
+        }
+
+        function getQuestionText(questionNum) {
+            const textarea = document.querySelector(`textarea[data-question="${questionNum}"]`);
+            return textarea ? textarea.previousElementSibling.textContent : `Question ${questionNum}`;
+        }
+
+        function startOver() {
+            // Don't allow starting over - show thank you message
+            return;
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            // Show email screen first
+            currentQuestion = 0;
+            showQuestion(currentQuestion);
+
+            // Save on input change for textareas
+            document.querySelectorAll('.answer-input').forEach(textarea => {
+                if (textarea.tagName === 'TEXTAREA') {
+                    textarea.addEventListener('input', function() {
+                        if (this.value.trim()) {
+                            this.classList.add('filled');
+                        } else {
+                            this.classList.remove('filled');
+                        }
+                    });
+                }
+            });
+
+            // Allow Enter key in email input to proceed
+            const emailInput = document.getElementById('userEmail');
+            if (emailInput) {
+                emailInput.addEventListener('keypress', function(event) {
+                    if (event.key === 'Enter') {
+                        nextQuestion();
+                    }
+                });
+            }
+        });
+
+        // Keyboard shortcuts
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Enter' && event.metaKey) {
+                nextQuestion();
+            }
+        });
+    </script>
+</body>
+</html>
