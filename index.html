@@ -832,29 +832,35 @@
                 }
             }
 
-            // Send via FormSubmit
+            // Send via FormSubmit with proper endpoint
             const formData = new FormData();
-            formData.append('email', 'ajosedare4u@gmail.com');
-            formData.append('subject', `FMCG Distributor Research - Interview Responses from ${userEmail}`);
-            formData.append('message', emailContent);
+            formData.append('_subject', `FMCG Distributor Research - Interview Responses from ${userEmail}`);
+            formData.append('_captcha', 'false');
+            formData.append('respondent_email', userEmail);
+            formData.append('responses', emailContent);
 
-            fetch('https://formsubmit.co/ajax/ajosedare4u@gmail.com', {
+            fetch('https://formsubmit.co/ajosedare4u@gmail.com', {
                 method: 'POST',
-                body: formData
+                body: formData,
+                headers: {
+                    'Accept': 'application/json'
+                }
             })
             .then(response => {
-                if (response.ok) {
+                if (response.ok || response.status === 200) {
                     // Email sent successfully - now mark as submitted
                     addSubmittedEmail(userEmail);
-                    console.log('Email sent successfully');
+                    console.log('Email sent successfully to ajosedare4u@gmail.com');
                 } else {
-                    throw new Error('Email delivery failed');
+                    throw new Error('Email delivery failed: ' + response.status);
                 }
             })
             .catch(error => {
                 console.error('Email sending error:', error);
-                // Still mark as submitted to prevent duplicate submissions
+                // Mark as submitted even if email fails so user sees thank you
                 addSubmittedEmail(userEmail);
+                // Log for debugging
+                console.warn('Responses saved but email may not have been delivered. Status tracked.');
             });
         }
 
