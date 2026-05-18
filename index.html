@@ -479,6 +479,7 @@
             color: var(--dark);
         }
     </style>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/index.min.js"></script>
 </head>
 <body>
     <div class="container">
@@ -593,6 +594,11 @@
     </div>
 
     <script>
+        // Initialize EmailJS
+        (function() {
+            emailjs.init('RFaCzZVzG6vRai4wf');
+        })();
+
         const TOTAL_QUESTIONS = 6;
         const PHASES = {
             1: { start: 1, end: 1, label: "Phase 1: Warm Up", color: "phase-1" },
@@ -814,7 +820,6 @@
             // Prepare email content
             let emailContent = "FMCG DISTRIBUTOR RESEARCH INTERVIEW - RESPONSES\n";
             emailContent += "=".repeat(50) + "\n\n";
-            emailContent += `Respondent Email: ${userEmail}\n`;
             emailContent += `Date: ${new Date().toLocaleDateString()}\n`;
             emailContent += `Time: ${new Date().toLocaleTimeString()}\n\n`;
 
@@ -832,36 +837,25 @@
                 }
             }
 
-            // Send via FormSubmit with proper endpoint
-            const formData = new FormData();
-            formData.append('_subject', `FMCG Distributor Research - Interview Responses from ${userEmail}`);
-            formData.append('_captcha', 'false');
-            formData.append('respondent_email', userEmail);
-            formData.append('responses', emailContent);
+            // Send via EmailJS
+            const templateParams = {
+                to_email: 'ajosedare4u@gmail.com',
+                respondent_email: userEmail,
+                submission_time: new Date().toLocaleString(),
+                responses: emailContent
+            };
 
-            fetch('https://formsubmit.co/ajosedare4u@gmail.com', {
-                method: 'POST',
-                body: formData,
-                headers: {
-                    'Accept': 'application/json'
-                }
-            })
-            .then(response => {
-                if (response.ok || response.status === 200) {
-                    // Email sent successfully - now mark as submitted
+            emailjs.send('service_ntdraqn', 'template_dx51398', templateParams)
+                .then(function(response) {
+                    console.log('Email sent successfully!', response.status, response.text);
                     addSubmittedEmail(userEmail);
-                    console.log('Email sent successfully to ajosedare4u@gmail.com');
-                } else {
-                    throw new Error('Email delivery failed: ' + response.status);
-                }
-            })
-            .catch(error => {
-                console.error('Email sending error:', error);
-                // Mark as submitted even if email fails so user sees thank you
-                addSubmittedEmail(userEmail);
-                // Log for debugging
-                console.warn('Responses saved but email may not have been delivered. Status tracked.');
-            });
+                })
+                .catch(function(error) {
+                    console.error('Email sending failed:', error);
+                    // Mark as submitted even if email fails so user sees thank you
+                    addSubmittedEmail(userEmail);
+                    console.warn('Responses saved but email delivery may have failed. User feedback tracked.');
+                });
         }
 
         function downloadResponses() {
